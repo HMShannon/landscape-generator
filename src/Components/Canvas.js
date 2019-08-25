@@ -236,11 +236,8 @@ export default class Canvas extends Component {
 
         let adjacentHeights = this.getAdjacent(pointsArray, i, j);
         let averageSurroundingHeight = adjacentHeights.reduce((curr, total) => total += curr)/adjacentHeights.length;
-        let spikeVal = 0;
 
-        for (let k = 0; k < adjacentHeights.length; k++) {
-          pointsArray[i][j].z = adjacentHeights.reduce((curr, total) => total += curr)/adjacentHeights.length;
-        }
+        pointsArray[i][j].z = averageSurroundingHeight;
       }
     }
 
@@ -321,7 +318,7 @@ export default class Canvas extends Component {
     this.scene = new THREE.Scene();
 
     this.camera = new THREE.PerspectiveCamera(this.state.zoom, this.mount.clientWidth / this.mount.clientHeight, 0.1, 9000);
-    this.camera.position.set( 400, 0, 640 );
+    this.camera.position.set( 400, -100, 740 );
     this.camera.up.set(1,0,0);
     this.camera.lookAt( 0, 0, 0 );
 
@@ -373,7 +370,7 @@ export default class Canvas extends Component {
         terrainMap.position.set(0, 0, 0);
         this.scene.add(terrainMap);
         terrainMap.rotation.x = this.state.rotationX;
-        terrainMap.rotation.y = Math.PI / 2;
+        terrainMap.rotation.y = Math.PI / 2 ;
 
 
         this.onResize();
