@@ -376,7 +376,7 @@ export default class Canvas extends Component {
         terrainMap.rotation.y = Math.PI / 2;
 
 
-        this.renderScene();
+        this.onResize();
         this.setState({
           isLoading: false
         });

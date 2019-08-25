@@ -21,7 +21,7 @@ const Controls = (props) => {
 
       <div id="zoom-slider" className="control-item">
         <p>Zoom:</p>
-        <input type="range" min="2" max="45" value={props.zoom} onChange={(e) => props.setProperty('zoom', e.target.value)}/>
+        <input type="range" min="2" max="30" value={props.zoom} onChange={(e) => props.setProperty('zoom', e.target.value)}/>
       </div>
 
       <button id="generate-button" className="control-item" disabled={props.isLoading} onClick={props.generateTerrain}>Generate Terrain</button>
