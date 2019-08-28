@@ -356,7 +356,6 @@ export default class Canvas extends Component {
         }
       });
       if (this.scene.children[2]) {
-        console.log(this.scene.children);
         this.scene.children[2].geometry.dispose();
         this.scene.children[2].material.dispose();
       }
