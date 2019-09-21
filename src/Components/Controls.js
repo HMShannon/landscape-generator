@@ -11,7 +11,7 @@ const Controls = (props) => {
 
       <div id="map-size-toggle" className="control-item">
         <p>Map size:</p>
-        <input type="range" min="4" max="8" value={props.n} onChange={(e) => props.setProperty('n', e.target.value)}/>
+        <input type="range" min="6" max="8" value={props.n} onChange={(e) => props.setProperty('n', e.target.value)}/>
       </div>
 
       <div id="roughness-toggle" className="control-item">

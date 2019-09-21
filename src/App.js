@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 
-import './App.css';
-
-import Canvas from './Components/Canvas';
+import DiamondSquare from './Components/DiamondSquare';
 
 class App extends Component {
 
@@ -10,7 +8,7 @@ class App extends Component {
     return (
       <div className="App">
 
-        <Canvas />
+        <DiamondSquare />
 
       </div>
     );
