@@ -11,7 +11,6 @@ export default class Canvas extends Component {
     grayscale: false,
     mouseIsDown: false,
     clickX: '',
-    clickY: '',
     rotationX: 0,
     displayRotateMessage: false,
     isLoading: false
@@ -29,8 +28,7 @@ export default class Canvas extends Component {
   setMouseDown = (e) => {
     this.setState({
       mouseIsDown: !this.state.mouseIsDown,
-      clickX: e.clientX || e.targetTouches[0].clientX,
-      clickY: e.clientY,
+      clickX: e.clientX || e.targetTouches[0].clientX
     });
   }
 
@@ -40,7 +38,6 @@ export default class Canvas extends Component {
       this.setState({
         mouseIsDown: false,
         clickX: '',
-        clickY: '',
         rotationX: this.scene.children[2].rotation.x || 0
       });
     }
