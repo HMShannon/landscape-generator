@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "lodash.template": "^4.5.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.0",
-    "three": "^0.104.0"
+    "react-three-fiber": "^4.2.10",
+    "three": "^0.125.0"
   },
   "scripts": {
     "start": "react-scripts start",

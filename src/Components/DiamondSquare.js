@@ -1,28 +1,21 @@
-import React, {Component} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
 
+import React, {useState, useEffect} from 'react';
 import Canvas from './Canvas';
 
+export default function DiamondSquare() {
 
-export default class DiamondSquare extends Component {
+  let [n, setN] = useState(7);
+  let [roughness, setRoughness] = useState(.6);
+  let [zoom, setZoom] = useState(14);
+  let [points, setPoints] = useState([]);
 
-  state = {
-    n: 7,
-    roughness: .6,
-    zoom: 14,
-    points: []
-  }
 
-  setProperty = (property, val) => {
-    this.setState({
-      [property]: val
-    });
-  }
-
-  generateArray = (corner1, corner2, corner3, corner4) => {
+  let generateArray = (corner1, corner2, corner3, corner4) => {
     let pointsArray = [];
-    for (let i = 0; i < (Math.pow(2, this.state.n)+1); i++) {
+    for (let i = 0; i < (Math.pow(2, n)+1); i++) {
       let newRow = [];
-      for (let j = 0; j < (Math.pow(2, this.state.n)+1); j++) {
+      for (let j = 0; j < (Math.pow(2, n)+1); j++) {
         newRow.push({z: null});
       }
       pointsArray.push(newRow);
@@ -32,14 +25,46 @@ export default class DiamondSquare extends Component {
     pointsArray[pointsArray.length-1][pointsArray.length-1].z = corner3;
     pointsArray[0][pointsArray.length-1].z = corner4;
     return pointsArray;
-  }
+  };
 
 
-  diamondSquare = () => {
+  let removeSpikes = (pointsArray) => {
+    for (let i = 0; i < pointsArray.length; i++) {
+      for (let j = 0; j < pointsArray[i].length; j++) {
+        let adjacentHeights = getAdjacent(pointsArray, i, j);
+        let averageSurroundingHeight = adjacentHeights.reduce((curr, total) => total += curr)/adjacentHeights.length;
+        pointsArray[i][j].z = averageSurroundingHeight;
+      }
+    }
+    return pointsArray;
+  };
 
+
+  let calculateZ = (points, pointToCalc, n, pointDistance) => {
+    points = points.filter((point) => point.z !== null);
+    let z = 0;
+    for (let i = 0; i < points.length; i++) {
+      z += points[i].z;
+    }
+    z = z/points.length;
+    let randomAmount;
+    randomAmount = Math.random() * pointDistance * roughness * .7;
+    if (n === 1) {
+      randomAmount *= .8;
+    }
+    if (Math.random() < 0.5) {
+      z -= randomAmount;
+    } else {
+      z += randomAmount;
+    }
+    pointToCalc.z = z;
+  };
+
+
+  let diamondSquare = () => {
     let corners = [0, 0, 0, 0];
     corners.forEach((corner, i) => {
-      let val = Math.random() * this.state.n * 2;
+      let val = Math.random() * n * 2;
       if (Math.random() < .5) {
         corners[i] -= val;
       } else {
@@ -47,12 +72,11 @@ export default class DiamondSquare extends Component {
       }
     });
 
-    let pointsArray = this.generateArray(...corners);
+    let pointsArray = generateArray(...corners);
     let step = 1;
-
     let pointDistance = pointsArray.length-1;
 
-    while (step < (2 * this.state.n + 1)) {
+    while (step < (2 * n + 1)) {
       if (step % 2 !== 0) { // diamond step, use all 4 points
         for (let i = 0; i < pointsArray.length; i+= pointDistance) {
           for (let j = 0; j < pointsArray[i].length; j += pointDistance) {
@@ -65,7 +89,7 @@ export default class DiamondSquare extends Component {
             pointsToUse.push(pointsArray[i+pointDistance][j]);
             pointsToUse.push(pointsArray[i+pointDistance][j+pointDistance]); // bottom right of current square
 
-            this.calculateZ(pointsToUse, pointsArray[Math.round(i+pointDistance/2)][Math.round(j+pointDistance/2)], step, pointDistance);
+            calculateZ(pointsToUse, pointsArray[Math.round(i+pointDistance/2)][Math.round(j+pointDistance/2)], step, pointDistance);
           }
         }
       } else { // square step, use only 3 points if on edge
@@ -87,7 +111,7 @@ export default class DiamondSquare extends Component {
               if (j-pointDistance >= 0) {
                 pointsToUse.push(pointsArray[i][j-pointDistance]);
               }
-              this.calculateZ(pointsToUse, pointsArray[i][j], step, pointDistance);
+              calculateZ(pointsToUse, pointsArray[i][j], step, pointDistance);
             }
           }
         }
@@ -100,45 +124,11 @@ export default class DiamondSquare extends Component {
       }
       step++;
     }
+    setPoints(removeSpikes(pointsArray));
+  };
 
 
-    let despikedPointsArray = this.removeSpikes(pointsArray);
-
-    this.setState({
-      points: despikedPointsArray
-    });
-  }
-
-
-  calculateZ = (points, pointToCalc, n, pointDistance) => {
-    points = points.filter((point) => point.z !== null);
-
-    let z = 0;
-    for (let i = 0; i < points.length; i++) {
-      z += points[i].z;
-    }
-    z = z/points.length;
-
-    let randomAmount;
-
-    randomAmount = Math.random() * pointDistance * this.state.roughness * .7;
-
-    if (n === 1) {
-      randomAmount *= .8;
-    }
-
-    if (Math.random() < 0.5) {
-      z -= randomAmount;
-    } else {
-      z += randomAmount;
-    }
-
-
-    pointToCalc.z = z;
-  }
-
-
-  getAdjacent = (array, pointI, pointJ) => {
+  let getAdjacent = (array, pointI, pointJ) => {
     let adjacentPoints = [];
     for (let i = pointI-1; i <= pointI+1; i++) {
       if (i < 0) {
@@ -162,29 +152,24 @@ export default class DiamondSquare extends Component {
   }
 
 
-  removeSpikes = (pointsArray) => {
+  useEffect(() => {
+    diamondSquare();
+  }, [n, roughness]);
 
-    for (let i = 0; i < pointsArray.length; i++) {
-      for (let j = 0; j < pointsArray[i].length; j++) {
 
-        let adjacentHeights = this.getAdjacent(pointsArray, i, j);
-        let averageSurroundingHeight = adjacentHeights.reduce((curr, total) => total += curr)/adjacentHeights.length;
-
-        pointsArray[i][j].z = averageSurroundingHeight;
-      }
-    }
-
-    return pointsArray;
-  }
-
-  render() {
+  if (points.length > 0) {
     return <Canvas
-              n={this.state.n}
-              roughness={this.state.roughness}
-              zoom={this.state.zoom}
-              points={this.state.points}
-              diamondSquare={this.diamondSquare}
-              setProperty={this.setProperty} />
+              n={n}
+              roughness={roughness}
+              zoom={zoom}
+              points={points}
+              diamondSquare={diamondSquare}
+              setN={setN}
+              setRoughness={setRoughness}
+              setZoom={setZoom}
+               />
+  } else {
+    return null;
   }
 
 }

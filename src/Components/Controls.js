@@ -11,17 +11,17 @@ const Controls = (props) => {
 
       <div id="map-size-toggle" className="control-item">
         <p>Map size:</p>
-        <input type="range" min="6" max="8" value={props.n} onChange={(e) => props.setProperty('n', e.target.value)}/>
+        <input type="range" min="6" max="8" value={props.n} onChange={(e) => props.setN(e.target.value)}/>
       </div>
 
       <div id="roughness-toggle" className="control-item">
         <p>Roughness:</p>
-        <input type="range" min=".1" max=".7" value={props.roughness} step=".1" onChange={(e) => props.setProperty('roughness', e.target.value)}/>
+        <input type="range" min=".1" max=".7" value={props.roughness} step=".1" onChange={(e) => props.setRoughness(e.target.value)}/>
       </div>
 
       <div id="zoom-slider" className="control-item">
         <p>Zoom:</p>
-        <input type="range" min="2" max="30" value={props.zoom} onChange={(e) => props.setProperty('zoom', e.target.value)}/>
+        <input type="range" min="2" max="30" value={props.zoom} onChange={(e) => props.setZoom(e.target.value)}/>
       </div>
 
       <button id="generate-button" className="control-item" disabled={props.isLoading} onClick={props.generateTerrain}>Generate Terrain</button>
