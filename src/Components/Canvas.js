@@ -6,7 +6,7 @@ import * as THREE from 'three';
 import Controls from './Controls';
 import Loading from './Loading';
 
-let light = new THREE.PointLight( 0xFFFFFF );
+let light = new THREE.PointLight(0xFFFFFF, 1, 100000);
 light.position.set(290, 250, 690);
 light.castShadow = true;
 let ambientLight = new THREE.AmbientLight((0xcccccc));
@@ -77,9 +77,9 @@ export default function Canvas(props) {
     setGrayscale(!grayscale);
     if (scene.children[2]) {
       if (!grayscale) {
-        scene.children[2].material = new THREE.MeshPhongMaterial({color: 'gray', flatShading: true, shininess: 1, precision: 'mediump'});
+        scene.children[2].material = new THREE.MeshPhongMaterial({color: 'gray', flatShading: true, shininess: 1, precision: 'lowp'});
       } else {
-        scene.children[2].material = new THREE.MeshPhongMaterial({vertexColors: THREE.VertexColors, color: 'white', flatShading: true, shininess: 1, precision: 'mediump'});
+        scene.children[2].material = new THREE.MeshPhongMaterial({vertexColors: THREE.VertexColors, color: 'white', flatShading: true, shininess: 1, precision: 'lowp'});
       }
     }
     renderScene();
@@ -139,13 +139,13 @@ export default function Canvas(props) {
     if (grayscale) {
       material = new THREE.MeshPhongMaterial(
         {
-          color: 'gray', flatShading: true, dithering: true
+          color: 'gray', flatShading: true, dithering: true, precision: 'lowp'
         }
       );
     } else {
       material = new THREE.MeshPhongMaterial(
         {
-          vertexColors: THREE.VertexColors, flatShading: true, shininess: 1, dithering: true
+          vertexColors: THREE.VertexColors, flatShading: true, shininess: 1, dithering: true, precision: 'lowp'
         }
       );
     }
