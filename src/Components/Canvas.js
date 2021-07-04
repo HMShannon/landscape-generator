@@ -77,9 +77,9 @@ export default function Canvas(props) {
     setGrayscale(!grayscale);
     if (scene.children[2]) {
       if (!grayscale) {
-        scene.children[2].material = new THREE.MeshBasicMaterial({color: 'gray', flatShading: true});
+        scene.children[2].material = new THREE.MeshPhongMaterial({color: 'gray', flatShading: true, shininess: 1, precision: 'mediump'});
       } else {
-        scene.children[2].material = new THREE.MeshBasicMaterial({vertexColors: THREE.VertexColors, color: 'white', flatShading: true, shininess: 1});
+        scene.children[2].material = new THREE.MeshPhongMaterial({vertexColors: THREE.VertexColors, color: 'white', flatShading: true, shininess: 1, precision: 'mediump'});
       }
     }
     renderScene();
