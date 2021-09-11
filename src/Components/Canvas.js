@@ -151,7 +151,8 @@ export default function Canvas(props) {
     window.addEventListener('resize', onResize);
     mount.current.appendChild(renderer.domElement);
     renderer.domElement.addEventListener('click', () => displayRotateMessage(false));
-    renderer.domElement.addEventListener('touch', () => displayRotateMessage(false));
+    renderer.domElement.addEventListener('touchend', () => displayRotateMessage(false));
+    renderer.domElement.addEventListener('touchcancel', () => displayRotateMessage(false));
 
     let controls = new OrbitControls(camera, renderer.domElement);
     controls.maxPolarAngle = 1.5;
