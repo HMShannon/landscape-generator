@@ -5,9 +5,8 @@ import Canvas from './Canvas';
 
 export default function DiamondSquare() {
 
-  let [n, setN] = useState(7);
+  let [n, setN] = useState(8);
   let [roughness, setRoughness] = useState(.6);
-  let [zoom, setZoom] = useState(14);
   let [points, setPoints] = useState([]);
 
 
@@ -161,12 +160,10 @@ export default function DiamondSquare() {
     return <Canvas
               n={n}
               roughness={roughness}
-              zoom={zoom}
               points={points}
               diamondSquare={diamondSquare}
               setN={setN}
               setRoughness={setRoughness}
-              setZoom={setZoom}
                />
   } else {
     return null;

@@ -19,11 +19,6 @@ const Controls = (props) => {
         <input type="range" min=".1" max=".7" value={props.roughness} step=".1" onChange={(e) => props.setRoughness(e.target.value)}/>
       </div>
 
-      <div id="zoom-slider" className="control-item">
-        <p>Zoom:</p>
-        <input type="range" min="2" max="30" value={props.zoom} onChange={(e) => props.setZoom(e.target.value)}/>
-      </div>
-
       <button id="generate-button" className="control-item" disabled={props.isLoading} onClick={props.generateTerrain}>Generate Terrain</button>
 
     </div>
