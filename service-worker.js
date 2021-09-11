@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.0/workbox-sw.js");
 
 importScripts(
-  "/landscape-generator/precache-manifest.243f3b47904c9d74313aa92d23f352cb.js"
+  "/landscape-generator/precache-manifest.e56c49b1e3b809854efd0378fa640777.js"
 );
 
 self.addEventListener('message', (event) => {
